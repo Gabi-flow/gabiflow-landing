@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GabiFlow — Smart Scheduling for Appointment-Based Businesses</title>
+<meta name="description" content="GabiFlow helps appointment-based businesses manage appointments, clients, services and daily flow in one calm, premium workspace." />
+<style>
+:root{--bg:#0B1220;--panel:#0F172A;--panel2:#0B1426;--text:#E5E7EB;--muted:#9CA3AF;--gold:#D4AF37;--gold-2:#c9a227;--info:#60A5FA;--border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.14);--shadow:0 18px 48px rgba(0,0,0,.28);}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:radial-gradient(1200px 700px at 30% -10%,rgba(96,165,250,.10),transparent 55%),radial-gradient(900px 600px at 110% 10%,rgba(212,175,55,.08),transparent 55%),linear-gradient(180deg,var(--bg),#070B12);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden}
+body::before,body::after{content:'';position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(30px);transform:translate3d(0,0,0)}
+body::before{top:-18vh;right:-12vw;width:58vw;height:58vw;opacity:.22;background:radial-gradient(circle,rgba(96,165,250,.32) 0%,rgba(96,165,250,.12) 34%,transparent 72%);animation:ambientFloatBlue 20s ease-in-out infinite alternate}
+body::after{top:12vh;left:-18vw;width:46vw;height:46vw;opacity:.18;background:radial-gradient(circle,rgba(212,175,55,.28) 0%,rgba(212,175,55,.12) 36%,transparent 74%);animation:ambientFloatGold 24s ease-in-out infinite alternate}
+.ambient-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(18px);mix-blend-mode:screen;opacity:.10}
+.ambient-orb.blue{width:24vw;height:24vw;right:14vw;bottom:10vh;background:radial-gradient(circle,rgba(96,165,250,.28),transparent 72%);animation:ambientDrift 26s ease-in-out infinite alternate}
+.ambient-orb.gold{width:18vw;height:18vw;left:8vw;bottom:16vh;background:radial-gradient(circle,rgba(212,175,55,.24),transparent 72%);animation:ambientDriftSlow 30s ease-in-out infinite alternate}
+.ambient-orb.blue-2{width:16vw;height:16vw;right:42vw;top:42vh;background:radial-gradient(circle,rgba(96,165,250,.18),transparent 72%);animation:ambientDriftMedium 22s ease-in-out infinite alternate}
+.ambient-orb.gold-2{width:14vw;height:14vw;left:48vw;top:62vh;background:radial-gradient(circle,rgba(212,175,55,.18),transparent 72%);animation:ambientDriftGold 26s ease-in-out infinite alternate}
+@keyframes ambientFloatBlue{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(-4vw,5vh,0) scale(1.10)}}
+@keyframes ambientFloatGold{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(5vw,-4vh,0) scale(1.08)}}
+@keyframes ambientDrift{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(2vw,-3vh,0)}}
+@keyframes ambientDriftSlow{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-3vw,2vh,0)}}
+@keyframes ambientDriftMedium{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-2vw,-2vh,0)}}
+@keyframes ambientDriftGold{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(2vw,1.6vh,0)}}
+@media (prefers-reduced-motion:reduce){body::before,body::after,.ambient-orb{animation:none!important}}
+main,header,footer,.lang-switch{position:relative;z-index:1}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1120px,calc(100% - 32px));margin:0 auto}
+.lang-switch{position:fixed;top:16px;right:16px;z-index:20;display:flex;gap:8px}
+.lang-switch button{border:1px solid var(--border2);background:rgba(15,23,42,.78);backdrop-filter:blur(10px);color:var(--text);padding:9px 12px;border-radius:999px;cursor:pointer;font-weight:700}
+.lang-switch button.active{background:var(--gold);color:var(--bg);border-color:transparent}
+header.hero{background:radial-gradient(circle at top right,rgba(96,165,250,.12),transparent 28%),radial-gradient(circle at 85% 12%,rgba(212,175,55,.10),transparent 22%),linear-gradient(135deg,var(--bg) 0%,var(--panel) 56%,#070B12 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+header.hero::after{content:'';position:absolute;inset:auto -10% -30% auto;width:60%;height:70%;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 64%);transform:rotate(-8deg);pointer-events:none}
+header.hero::before{content:'';position:absolute;left:-10%;top:8%;width:70%;height:80%;background:radial-gradient(circle,rgba(255,255,255,.04),transparent 62%);pointer-events:none;animation:heroGlow 18s ease-in-out infinite alternate}
+@keyframes heroGlow{0%{transform:translate3d(0,0,0) scale(1)}100%{transform:translate3d(2vw,-2vh,0) scale(1.04)}}
+nav{display:flex;align-items:center;justify-content:space-between;padding:20px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.2px;font-size:1.15rem}
+.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--gold),#8D6F19);color:var(--bg);display:flex;align-items:center;justify-content:center;font-weight:900;box-shadow:0 10px 22px rgba(212,175,55,.20)}
+.nav-links{display:flex;gap:18px;flex-wrap:wrap;color:var(--text);font-size:.96rem;opacity:.92}
+
+/* Early Access badge */
+.access-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:rgba(212,175,55,.10);border:1px solid rgba(212,175,55,.35);color:var(--gold);font-size:.82rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;margin-bottom:18px}
+.access-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(212,175,55,.5);animation:pulseDot 2.4s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 0 0 rgba(212,175,55,.5)}50%{box-shadow:0 0 0 8px rgba(212,175,55,0)}}
+
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:center;padding:48px 0 76px}
+.hero h1{font-size:clamp(2.45rem,5vw,4.2rem);line-height:1.02;margin:0 0 14px;position:relative}
+.hero h1::after{content:'';display:block;width:64px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:18px;border-radius:2px}
+.hero p.lead{font-size:1.08rem;line-height:1.75;color:#D1D5DB;max-width:68ch;margin-bottom:24px}
+.hero p.subline{font-size:.98rem;line-height:1.8;color:#CBD5E1;max-width:68ch;margin:-6px 0 22px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border-radius:12px;font-weight:800;border:1px solid transparent;min-height:44px;cursor:pointer;font:inherit}
+.btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold-2));color:var(--bg);box-shadow:0 4px 12px rgba(212,175,55,.25)}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.secondary{background:rgba(255,255,255,.05);color:var(--text);border-color:rgba(255,255,255,.14)}
+.btn.secondary:hover{background:rgba(255,255,255,.08)}
+.btn.info{background:linear-gradient(135deg,var(--info),#3B82F6);color:#07111f}
+.hero-card{background:rgba(15,23,42,.68);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:22px;box-shadow:0 20px 40px rgba(0,0,0,.18)}
+.hero-card h3{margin:0 0 14px;font-size:1.08rem}
+.hero-card ul{margin:0;padding-left:18px;color:var(--text);line-height:1.8}
+section{padding:76px 0;scroll-margin-top:18px}
+header.hero{scroll-margin-top:0}
+.section-title{font-size:clamp(1.7rem,3vw,2.6rem);margin:0 0 10px;position:relative;display:inline-block}
+.section-title::after{content:'';display:block;width:48px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:10px;border-radius:2px}
+.section-lead{color:#CBD5E1;max-width:72ch;line-height:1.78;margin-bottom:28px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:rgba(15,23,42,.92);border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 10px;font-size:1.08rem;color:var(--gold)}
+.card p{margin:0;color:#CBD5E1;line-height:1.75}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.tag{padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--text);border:1px solid rgba(255,255,255,.10);font-weight:600;font-size:.92rem}
+.why{background:linear-gradient(180deg,rgba(15,23,42,.35),rgba(11,20,38,.18));border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.check-list{display:grid;gap:14px}
+.check{display:flex;gap:12px;align-items:flex-start}
+.check .dot{width:26px;height:26px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;font-weight:900;color:var(--bg);background:var(--info);flex:0 0 auto;margin-top:2px}
+.download-box{background:rgba(15,23,42,.72);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
+.download-box p{color:#CBD5E1;line-height:1.78}
+.faq-list{display:grid;gap:16px}
+.faq-item{background:rgba(15,23,42,.78);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
+.faq-item h3{margin:0 0 8px;font-size:1rem;color:var(--gold)}
+.faq-item p{margin:0;color:#CBD5E1;line-height:1.75}
+form{display:grid;gap:14px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+input,textarea{width:100%;padding:14px 14px;border:1px solid rgba(255,255,255,.10);border-radius:12px;font:inherit;background:rgba(11,20,38,.92);color:var(--text)}
+input:focus,textarea:focus{outline:2px solid rgba(212,175,55,.4);outline-offset:0;border-color:rgba(212,175,55,.4)}
+textarea{min-height:140px;resize:vertical}
+.mini{font-size:.92rem;color:var(--muted)}
+footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px solid var(--border);margin-top:30px}
+.foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px}
+.foot-grid .brand{font-size:1rem;opacity:.9}
+.lang{display:none}
+.lang.active{display:block}
+@media (max-width:920px){.hero-grid,.grid-3,.grid-2,.row{grid-template-columns:1fr}.nav-links{display:none}.hero-grid{padding:34px 0 56px}.hero-card,.card,.download-box,.faq-item{padding:18px}section{padding:56px 0}.cta-row{gap:10px}.cta-row .btn{width:100%}.tag-row{gap:8px}.tag{font-size:.88rem;padding:8px 11px}.lang-switch{top:12px;right:12px}.wrap{width:min(1120px,calc(100% - 24px))}body::before,body::after,.ambient-orb{opacity:.11}}
+</style>
+</head>
+<body>
+<div class="ambient-orb blue"></div>
+<div class="ambient-orb gold"></div>
+<div class="ambient-orb blue-2"></div>
+<div class="ambient-orb gold-2"></div>
+
+<div class="lang-switch">
+  <button class="active" data-lang="en">EN</button>
+  <button data-lang="el">EL</button>
+</div>
+
+<header class="hero" id="home">
+  <div class="wrap">
+    <nav>
+      <div class="brand"><div class="logo">G</div><div>GabiFlow</div></div>
+      <div class="nav-links"> 
+ <a href="#home">Home</a> 
+ <a href="#product">Product</a> 
+ <a href="#features">Features</a> 
+ <a href="#why">Why GabiFlow</a> 
+ <a href="#faq">FAQ</a> 
+ <a href="#access">Request Access</a> 
+ <a href="#contact">Contact</a> 
+ </div>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero">
+        <div class="lang active" id="en-hero"> 
+ <span class="access-badge"><span class="pulse"></span>Early Access</span> 
+ <h1>Smart scheduling that keeps your day under control.</h1> 
+ <p class="lead">GabiFlow helps appointment-based businesses manage appointments, clients, services and daily flow in one calm workspace.</p> 
+ <p class="subline">Built for barbers, salons, nail studios, tattoo artists, clinics and spas — with a premium dark interface that stays clear through a long working day.</p> 
+ <div class="cta-row"> 
+ <a class="btn primary" href="#access">Request access</a> 
+ <a class="btn secondary" href="#product">See product</a> 
+ </div> 
+ </div> 
+ <div class="lang" id="el-hero"> 
+ <span class="access-badge"><span class="pulse"></span>Early Access</span> 
+ <h1>Έξυπνη οργάνωση ραντεβού που κρατά τον έλεγχο της ημέρας σου.</h1> 
+ <p class="lead">Το GabiFlow βοηθά επιχειρήσεις με ραντεβού να διαχειρίζονται ραντεβού, πελάτες, υπηρεσίες και την καθημερινή ροή σε ένα ήρεμο περιβάλλον εργασίας.</p> 
+ <p class="subline">Φτιαγμένο για barbershops, κομμωτήρια, nail studios, tattoo artists, ιατρεία και spas — με premium dark περιβάλλον που μένει καθαρό σε μια μεγάλη μέρα.</p> 
+ <div class="cta-row"> 
+ <a class="btn primary" href="#access">Ζήτησε πρόσβαση</a> 
+ <a class="btn secondary" href="#product">Δες το προϊόν</a> 
+ </div> 
+ </div> 
+ </div> 
+ <aside class="hero-card"> 
+ <div class="lang active" id="en-aside"> 
+ <h3>What GabiFlow helps you manage</h3> 
+ <ul> 
+ <li>Appointments and the daily timeline</li> 
+ <li>Clients, notes and service history</li> 
+ <li>Services and durations</li> 
+ <li>Staff visibility and daily flow</li> 
+ <li>A calmer workspace with less friction</li> 
+ </ul> 
+ </div> 
+ <div class="lang" id="el-aside"> 
+ <h3>Τι βοηθά να διαχειρίζεσαι το GabiFlow</h3> 
+ <ul> 
+ <li>Ραντεβού και ημερήσια ροή</li> 
+ <li>Πελάτες, σημειώσεις και ιστορικό</li> 
+ <li>Υπηρεσίες και διάρκειες</li> 
+ <li>Ορατότητα προσωπικού και καθημερινή οργάνωση</li> 
+ <li>Πιο ήρεμο workspace με λιγότερη τριβή</li> 
+ </ul> 
+ </div> 
+ </aside>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section id="product"> 
+ <div class="wrap grid-2"> 
+ <div> 
+ <div class="lang active" id="en-product-head"> 
+ <h2 class="section-title">Product</h2> 
+ <p class="section-lead">GabiFlow is designed around the day-to-day reality of appointment-based businesses: keeping bookings clear, client information close, services structured and the working day easier to follow.</p> 
+ </div> 
+ <div class="lang" id="el-product-head"> 
+ <h2 class="section-title">Product</h2> 
+ <p class="section-lead">Το GabiFlow είναι σχεδιασμένο γύρω από την καθημερινή πραγματικότητα των επιχειρήσεων με ραντεβού: καθαρό πρόγραμμα, άμεση πρόσβαση σε πληροφορίες πελατών, σωστή οργάνωση υπηρεσιών και πιο εύκολη παρακολούθηση της ημέρας.</p> 
+ </div> 
+ </div> 
+ <div class="grid-2"> 
+ <div class="card"> 
+ <div class="lang active"><h3>Appointments & timeline</h3><p>See the day clearly, place bookings with confidence and keep your schedule readable at a glance.</p></div> 
+ <div class="lang"><h3>Ραντεβού & timeline</h3><p>Δες την ημέρα καθαρά, τοποθέτησε ραντεβού με σιγουριά και κράτησε το πρόγραμμα ευανάγνωστο με μια ματιά.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Clients & notes</h3><p>Keep useful client context, notes and service history close to the booking flow.</p></div> 
+ <div class="lang"><h3>Πελάτες & σημειώσεις</h3><p>Κράτησε χρήσιμο context, σημειώσεις και ιστορικό υπηρεσιών κοντά στη ροή των ραντεβού.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Services & durations</h3><p>Define your services clearly so time planning feels consistent and easy to maintain.</p></div> 
+ <div class="lang"><h3>Υπηρεσίες & διάρκειες</h3><p>Όρισε καθαρά τις υπηρεσίες σου ώστε ο χρονικός προγραμματισμός να είναι σταθερός και εύκολος στη συντήρηση.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Staff & daily flow</h3><p>Built to stay useful for solo professionals as well as small teams that need daily visibility.</p></div> 
+ <div class="lang"><h3>Προσωπικό & καθημερινή ροή</h3><p>Χρήσιμο τόσο για solo επαγγελματίες όσο και για μικρές ομάδες που χρειάζονται καθαρή εικόνα της ημέρας.</p></div> 
+ </div> 
+ </div> 
+ </div> 
+</section> 
+<section id="features"> 
+ <div class="wrap"> 
+ <div class="lang active" id="en-features-head"> 
+ <h2 class="section-title">Features</h2> 
+ <p class="section-lead">A premium but practical experience for appointment-based businesses — focused on clarity, flow and consistency rather than noise.</p> 
+ </div> 
+ <div class="lang" id="el-features-head"> 
+ <h2 class="section-title">Features</h2> 
+ <p class="section-lead">Μία premium αλλά πρακτική εμπειρία για επιχειρήσεις με ραντεβού — με έμφαση στην καθαρότητα, τη ροή και τη συνέπεια, όχι στον θόρυβο.</p> 
+ </div> 
+ <div class="grid-3"> 
+ <div class="card"> 
+ <div class="lang active"><h3>Clear daily view</h3><p>Organize bookings and the daily timeline with more clarity and less friction.</p></div> 
+ <div class="lang"><h3>Καθαρή ημερήσια εικόνα</h3><p>Οργάνωσε ραντεβού και την ημερήσια ροή με μεγαλύτερη καθαρότητα και λιγότερη τριβή.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Client context</h3><p>Keep notes, service history and useful client information in one calm place.</p></div> 
+ <div class="lang"><h3>Client context</h3><p>Κράτησε σημειώσεις, ιστορικό και χρήσιμες πληροφορίες πελατών σε ένα ήρεμο, καθαρό σημείο.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Service structure</h3><p>Define services and durations with consistency so the schedule stays readable.</p></div> 
+ <div class="lang"><h3>Δομή υπηρεσιών</h3><p>Όρισε υπηρεσίες και διάρκειες με συνέπεια ώστε το πρόγραμμα να μένει καθαρό.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>For solo and team use</h3><p>Built to feel useful whether you work alone or manage a small appointment-based team.</p></div> 
+ <div class="lang"><h3>Για solo και ομάδες</h3><p>Φτιαγμένο για να είναι χρήσιμο είτε δουλεύεις μόνος είτε διαχειρίζεσαι μια μικρή ομάδα με ραντεβού.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Calm workspace</h3><p>A quieter interface that feels easier on the eye through a long working day.</p></div> 
+ <div class="lang"><h3>Ήρεμο workspace</h3><p>Ένα πιο ήσυχο περιβάλλον που κουράζει λιγότερο το μάτι σε μια μεγάλη εργάσιμη ημέρα.</p></div> 
+ </div> 
+ <div class="card"> 
+ <div class="lang active"><h3>Practical by design</h3><p>Premium in feel, but grounded in the real flow of appointment-based work.</p></div> 
+ <div class="lang"><h3>Πρακτικό από σχεδιασμό</h3><p>Premium στην αίσθηση, αλλά βασισμένο στην πραγματική ροή εργασίας επιχειρήσεων με ραντεβού.</p></div> 
+ </div> 
+ </div> 
+ <div class="lang active" id="en-industries"> 
+ <div class="tag-row"> 
+ <span class="tag">Barbers</span> 
+ <span class="tag">Hair Salons</span> 
+ <span class="tag">Nail Studios</span> 
+ <span class="tag">Tattoo Studios</span> 
+ <span class="tag">Beauty &amp; Aesthetics</span> 
+ <span class="tag">Lash &amp; Brow Studios</span> 
+ <span class="tag">Clinics</span> 
+ <span class="tag">Dental Clinics</span> 
+ <span class="tag">Therapists</span> 
+ <span class="tag">Massage &amp; Wellness</span> 
+ <span class="tag">Spas</span> 
+ <span class="tag">Pet Grooming</span> 
+ </div> 
+ <div class="mini" style="margin-top:14px;">and other appointment-based businesses</div> 
+ </div> 
+ <div class="lang" id="el-industries"> 
+ <div class="tag-row"> 
+ <span class="tag">Barbershops</span> 
+ <span class="tag">Κομμωτήρια</span> 
+ <span class="tag">Nail Studios</span> 
+ <span class="tag">Tattoo Studios</span> 
+ <span class="tag">Αισθητική &amp; Ομορφιά</span> 
+ <span class="tag">Lash &amp; Brow Studios</span> 
+ <span class="tag">Ιατρεία</span> 
+ <span class="tag">Οδοντιατρεία</span> 
+ <span class="tag">Θεραπευτές</span> 
+ <span class="tag">Massage &amp; Wellness</span> 
+ <span class="tag">Spas</span> 
+ <span class="tag">Pet Grooming</span> 
+ </div> 
+ <div class="mini" style="margin-top:14px;">και άλλες επιχειρήσεις που λειτουργούν με ραντεβού</div> 
+ </div> 
+ </div> 
+</section>
+
+<section class="why" id="why">
+  <div class="wrap grid-2">
+    <div>
+      <div class="lang active">
+        <h2 class="section-title">Why GabiFlow</h2>
+        <p class="section-lead">Good software is not only about features. It is about calm confidence, visual control and a feeling of trust from the first glance to the end of the day.</p>
+      </div>
+      <div class="lang">
+        <h2 class="section-title">Γιατί GabiFlow</h2>
+        <p class="section-lead">Το καλό software δεν είναι μόνο θέμα δυνατοτήτων. Είναι θέμα ήρεμης αυτοπεποίθησης, οπτικού ελέγχου και αίσθησης εμπιστοσύνης από την πρώτη ματιά μέχρι το τέλος της ημέρας.</p>
+      </div>
+    </div>
+    <div class="check-list">
+      <div class="check"><span class="dot">✓</span>
+        <div class="lang active"><strong>Calm dark premium</strong><div class="mini">Elegant without feeling heavy.</div></div>
+        <div class="lang"><strong>Ήρεμο dark premium</strong><div class="mini">Κομψό χωρίς να νιώθει βαρύ.</div></div>
+      </div>
+      <div class="check"><span class="dot">✓</span>
+        <div class="lang active"><strong>Easy on the eye</strong><div class="mini">Lower-fatigue contrast for long working days.</div></div>
+        <div class="lang"><strong>Ευχάριστο στο μάτι</strong><div class="mini">Λιγότερο κουραστικό contrast για μεγάλες μέρες.</div></div>
+      </div>
+      <div class="check"><span class="dot">✓</span>
+        <div class="lang active"><strong>Built for real flow</strong><div class="mini">Appointments, clients and daily organization belong together.</div></div>
+        <div class="lang"><strong>Φτιαγμένο για πραγματική ροή</strong><div class="mini">Ραντεβού, πελάτες και καθημερινή οργάνωση ανήκουν στο ίδιο περιβάλλον.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="access"> 
+ <div class="wrap"> 
+ <div class="download-box"> 
+ <div class="lang active" id="en-access-head"> 
+ <h2 class="section-title">Request access</h2> 
+ <p>GabiFlow is currently onboarding appointment-based businesses that want a calmer and more organized daily workflow. Send a short message and we’ll get back to you with the next steps.</p> 
+ <div class="cta-row" style="margin-top:14px;"> 
+ <a class="btn info" href="#contact">Request access</a> 
+ </div> 
+ </div> 
+ <div class="lang" id="el-access-head"> 
+ <h2 class="section-title">Ζήτησε πρόσβαση</h2> 
+ <p>Το GabiFlow ανοίγει σταδιακά σε επιχειρήσεις με ραντεβού που θέλουν μια πιο ήρεμη και οργανωμένη καθημερινή ροή. Στείλε ένα σύντομο μήνυμα και θα επικοινωνήσουμε μαζί σου με τα επόμενα βήματα.</p> 
+ <div class="cta-row" style="margin-top:14px;"> 
+ <a class="btn info" href="#contact">Ζήτησε πρόσβαση</a> 
+ </div> 
+ </div> 
+ </div> 
+ </div> 
+</section>
+
+<section id="faq"> 
+ <div class="wrap"> 
+ <div class="lang active" id="en-faq-head"> 
+ <h2 class="section-title">FAQ</h2> 
+ <p class="section-lead">A few quick answers to the most common questions about GabiFlow.</p> 
+ </div> 
+ <div class="lang" id="el-faq-head"> 
+ <h2 class="section-title">FAQ</h2> 
+ <p class="section-lead">Μερικές γρήγορες απαντήσεις στις πιο συχνές ερωτήσεις για το GabiFlow.</p> 
+ </div> 
+ <div class="faq-list"> 
+ <div class="faq-item"> 
+ <div class="lang active"><h3>Who is GabiFlow for?</h3><p>GabiFlow is designed for appointment-based businesses such as barbers, hair salons, nail studios, tattoo studios, beauty and aesthetics, lash and brow studios, clinics, dental clinics, therapists, massage and wellness, spas, pet grooming and other businesses that work by appointment.</p></div> 
+ <div class="lang"><h3>Για ποιους είναι το GabiFlow;</h3><p>Το GabiFlow είναι σχεδιασμένο για επιχειρήσεις που δουλεύουν με ραντεβού όπως barbershops, κομμωτήρια, nail studios, tattoo studios, αισθητική και ομορφιά, lash και brow studios, ιατρεία, οδοντιατρεία, θεραπευτές, massage και wellness, spas, pet grooming και άλλες επιχειρήσεις που λειτουργούν με ραντεβού.</p></div> 
+ </div> 
+ <div class="faq-item"> 
+ <div class="lang active"><h3>What can I manage with it?</h3><p>You can manage appointments, clients, service structure and the daily working flow in one place.</p></div> 
+ <div class="lang"><h3>Τι μπορώ να διαχειρίζομαι με αυτό;</h3><p>Μπορείς να διαχειρίζεσαι ραντεβού, πελάτες, δομή υπηρεσιών και την καθημερινή ροή εργασίας σε ένα σημείο.</p></div> 
+ </div> 
+ <div class="faq-item"> 
+ <div class="lang active"><h3>Is it only for teams?</h3><p>No. GabiFlow is useful both for solo professionals and for small teams that need clearer daily organization.</p></div> 
+ <div class="lang"><h3>Είναι μόνο για ομάδες;</h3><p>Όχι. Το GabiFlow είναι χρήσιμο τόσο για solo επαγγελματίες όσο και για μικρές ομάδες που χρειάζονται πιο καθαρή καθημερινή οργάνωση.</p></div> 
+ </div> 
+ <div class="faq-item"> 
+ <div class="lang active"><h3>How do I get access?</h3><p>Use the contact form below and send a short message about your business. We’ll reply with the next steps.</p></div> 
+ <div class="lang"><h3>Πώς παίρνω πρόσβαση;</h3><p>Χρησιμοποίησε τη φόρμα επικοινωνίας πιο κάτω και στείλε ένα σύντομο μήνυμα για την επιχείρησή σου. Θα απαντήσουμε με τα επόμενα βήματα.</p></div> 
+ </div> 
+ <div class="faq-item"> 
+ <div class="lang active"><h3>Why does the landing page not list every feature?</h3><p>Because the goal here is clarity first: what GabiFlow helps you manage, who it is for and how to start the conversation.</p></div> 
+ <div class="lang"><h3>Γιατί το landing page δεν δείχνει κάθε feature;</h3><p>Γιατί ο στόχος εδώ είναι πρώτα η καθαρότητα: τι βοηθά να διαχειρίζεσαι το GabiFlow, για ποιους είναι και πώς ξεκινά η επικοινωνία.</p></div> 
+ </div> 
+ </div> 
+ </div> 
+</section> 
+<section id="contact">
+  <div class="wrap grid-2">
+    <div>
+      <div class="lang active">
+        <h2 class="section-title">Contact</h2>
+        <p class="section-lead">Interested in GabiFlow for your business? Send a message and let’s talk about your workflow and what fits you best.</p>
+        <p>
+          <strong>Email:</strong> <a href="mailto:info@gabiflow.eu" style="color:var(--gold);">info@gabiflow.eu</a><br>
+          <strong>Phone:</strong> +30 698 576 9615<br>
+          <strong>Website:</strong> www.gabiflow.eu
+        </p>
+      </div>
+      <div class="lang">
+        <h2 class="section-title">Επικοινωνία</h2>
+        <p class="section-lead">Σε ενδιαφέρει το GabiFlow για την επιχείρησή σου; Στείλε μήνυμα και ας μιλήσουμε για τη ροή σου και τι σου ταιριάζει καλύτερα.</p>
+        <p>
+          <strong>Email:</strong> <a href="mailto:info@gabiflow.eu" style="color:var(--gold);">info@gabiflow.eu</a><br>
+          <strong>Τηλέφωνο:</strong> +30 698 576 9615<br>
+          <strong>Website:</strong> www.gabiflow.eu
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <form id="contactForm" onsubmit="return sendInquiry(event)">
+        <div class="row">
+          <input type="text" id="cf_name" placeholder="Name / Όνομα" required />
+          <input type="email" id="cf_email" placeholder="Email" required />
+        </div>
+        <input type="text" id="cf_business" placeholder="Business / studio / clinic" />
+        <textarea id="cf_msg" placeholder="A few words about your business and what you need / Λίγα λόγια για την επιχείρηση και τι χρειάζεσαι" required></textarea>
+        <button type="submit" class="btn primary">
+          <span class="lang active">Send inquiry</span>
+          <span class="lang">Στείλε αίτημα</span>
+        </button>
+        <div class="mini">
+          <span class="lang active">Opens your email client to send to info@gabiflow.eu.</span>
+          <span class="lang">Ανοίγει το email σου για αποστολή στο info@gabiflow.eu.</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <div class="brand"><div class="logo" style="width:28px;height:28px;border-radius:9px;font-size:.95rem;">G</div><div>GabiFlow</div></div>
+    <div>© 2026 GabiFlow · <a href="https://gabiflow.eu" style="color:var(--gold);">gabiflow.eu</a></div>
+  </div>
+</footer>
+
+<script>
+const buttons = document.querySelectorAll('.lang-switch button');
+const setLanguage = (lang) => {
+  buttons.forEach(btn => btn.classList.toggle('active', btn.dataset.lang === lang));
+  /* Pair containers with two .lang children — first = en, second = el */
+  document.querySelectorAll('.card,.download-box,.check,.faq-item,section>.wrap>div,aside,.hero-grid>.hero,#contactForm button,#contactForm .mini').forEach(container => {
+    const langs = container.querySelectorAll(':scope > .lang');
+    if (langs.length === 2) {
+      langs[0].classList.toggle('active', lang === 'en');
+      langs[1].classList.toggle('active', lang === 'el');
+    }
+  });
+  /* Explicit hero/aside/features-head pairs */
+  [['en-hero','el-hero'],['en-aside','el-aside'],['en-product-head','el-product-head'],['en-features-head','el-features-head'],['en-industries','el-industries'],['en-access-head','el-access-head'],['en-faq-head','el-faq-head']].forEach(ids => {
+    const a = document.getElementById(ids[0]);
+    const b = document.getElementById(ids[1]);
+    if (a && b) { a.classList.toggle('active', lang === 'en'); b.classList.toggle('active', lang === 'el'); }
+  });
+  document.documentElement.lang = lang;
+};
+buttons.forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
+setLanguage('en');
+
+/* Mailto submission — works without backend */
+function sendInquiry(e){
+  e.preventDefault();
+  const name = document.getElementById('cf_name').value.trim();
+  const email = document.getElementById('cf_email').value.trim();
+  const biz = document.getElementById('cf_business').value.trim();
+  const msg = document.getElementById('cf_msg').value.trim();
+  const subject = `GabiFlow Inquiry — ${name}${biz ? ' / ' + biz : ''}`;
+  const body = `Name: ${name}\nEmail: ${email}\nBusiness: ${biz}\n\n${msg}`;
+  window.location.href = `mailto:info@gabiflow.eu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return false;
+}
+
+/* Home button absolute-top fix */
+document.querySelectorAll('a[href="#home"]').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (history.replaceState) history.replaceState(null, '', '#home');
+  });
+});
+</script>
+</body>
+</html>
