@@ -191,8 +191,9 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
       <div class="brand"><div class="logo">G</div><div>GabiFlow</div></div>
       <div class="nav-links"> 
  <a href="#home">Home</a> 
- <a href="https://app.gabiflow.eu">App</a> 
- <a href="#product">Product</a> 
+ <a href="https://app.gabiflow.eu">App</a>
+ <a href="#demo">Demo</a>
+ <a href="#product">Product</a>
  <a href="#features">Features</a> 
  <a href="#why">Why GabiFlow</a> 
  <a href="#faq">FAQ</a> 
@@ -211,9 +212,9 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
  <p class="mini"><strong>GabiFlow</strong> is an early-access booking, scheduling and client management platform for modern service businesses.</p> 
  <div class="cta-row">
  <a class="btn primary" href="https://app.gabiflow.eu">Open App</a>
+ <a class="btn secondary" href="#demo">▶ Watch 40s demo</a>
  <a class="btn secondary" href="#access">Request access</a>
- <a class="btn secondary" href="#product">See product</a>
- </div> 
+ </div>
  </div> 
  <div class="lang" id="el-hero"> 
  <span class="access-badge"><span class="pulse"></span>Early Access</span> 
@@ -223,9 +224,9 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
  <p class="mini"><strong>GabiFlow</strong> είναι early-access πλατφόρμα για κρατήσεις, πρόγραμμα ραντεβού και διαχείριση πελατών για σύγχρονες επιχειρήσεις υπηρεσιών.</p> 
  <div class="cta-row">
  <a class="btn primary" href="https://app.gabiflow.eu">Άνοιγμα App</a>
+ <a class="btn secondary" href="#demo">▶ Δες το σε 40″</a>
  <a class="btn secondary" href="#access">Ζήτησε πρόσβαση</a>
- <a class="btn secondary" href="#product">Δες το προϊόν</a>
- </div> 
+ </div>
  </div> 
  </div> 
  <aside class="hero-card"> 
@@ -256,7 +257,68 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
 
 <main>
 
-<section id="product"> 
+<section id="demo">
+ <div class="wrap">
+ <div class="lang active" id="en-demo-head" style="text-align:center">
+ <h2 class="section-title">See it in 40 seconds</h2>
+ <p class="section-lead" style="margin-left:auto;margin-right:auto">A quick look at GabiFlow — the weekly timeline, Smart Import from a photo, reminders, revenue, colours and tables.</p>
+ </div>
+ <div class="lang" id="el-demo-head" style="text-align:center">
+ <h2 class="section-title">Δες το σε 40 δευτερόλεπτα</h2>
+ <p class="section-lead" style="margin-left:auto;margin-right:auto">Μια γρήγορη ματιά στο GabiFlow — εβδομαδιαίο timeline, Smart Import από φωτογραφία, υπενθυμίσεις, έσοδα, χρώματα και τραπέζια.</p>
+ </div>
+ <div style="max-width:980px;margin:8px auto 0;border-radius:24px;overflow:hidden;border:1px solid var(--border2);box-shadow:0 24px 60px rgba(0,0,0,.35);background:#0B1220">
+ <video id="demoVideo" muted loop playsinline preload="metadata" poster="gabiflow_promo_poster.jpg" style="display:block;width:100%;height:auto;background:#0B1220">
+ <source src="gabiflow_promo.mp4" type="video/mp4">
+ </video>
+ </div>
+ <div style="text-align:center;margin-top:22px">
+ <a class="btn primary" href="https://app.gabiflow.eu">Open App</a>
+ </div>
+ </div>
+</section>
+<script>
+(function(){
+  var v=document.getElementById('demoVideo'); if(!v) return;
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ try{ v.currentTime=0; }catch(_){} var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+        else { v.pause(); }
+      });
+    },{threshold:0.4});
+    io.observe(v);
+  } else { v.setAttribute('autoplay',''); var p=v.play(); if(p&&p.catch) p.catch(function(){}); }
+  // "Watch demo" buttons: gently glide the video to the centre of the screen, then play from start
+  function easeInOutCubic(t){ return t<0.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function glideToCenter(el,done){
+    var rect=el.getBoundingClientRect();
+    var target=window.pageYOffset+rect.top-(window.innerHeight-rect.height)/2;
+    var maxY=document.documentElement.scrollHeight-window.innerHeight;
+    target=Math.max(0,Math.min(target,maxY));
+    var start=window.pageYOffset, dist=target-start, dur=900, t0=null;
+    if(Math.abs(dist)<2){ done&&done(); return; }
+    function step(ts){
+      if(t0===null) t0=ts;
+      var p=Math.min(1,(ts-t0)/dur);
+      window.scrollTo(0,start+dist*easeInOutCubic(p));
+      if(p<1) requestAnimationFrame(step); else done&&done();
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('a[href="#demo"]').forEach(function(a){
+    a.addEventListener('click',function(ev){
+      ev.preventDefault();
+      glideToCenter(v,function(){
+        try{ v.currentTime=0; }catch(_){}
+        var p=v.play(); if(p&&p.catch) p.catch(function(){});
+      });
+    });
+  });
+})();
+</script>
+
+<section id="product">
  <div class="wrap grid-2"> 
  <div> 
  <div class="lang active" id="en-product-head"> 
