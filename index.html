@@ -268,8 +268,12 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
  <p class="section-lead" style="margin-left:auto;margin-right:auto">Μια γρήγορη ματιά στο GabiFlow — εβδομαδιαίο timeline, Smart Import από φωτογραφία, υπενθυμίσεις, έσοδα, χρώματα και τραπέζια.</p>
  </div>
  <div style="max-width:980px;margin:8px auto 0;border-radius:24px;overflow:hidden;border:1px solid var(--border2);box-shadow:0 24px 60px rgba(0,0,0,.35);background:#0B1220">
- <video id="demoVideo" muted loop playsinline preload="metadata" poster="gabiflow_promo_poster.jpg" style="display:block;width:100%;height:auto;background:#0B1220">
- <source src="gabiflow_promo.mp4" type="video/mp4">
+ <video id="demoVideo" muted loop playsinline preload="metadata" poster="gabiflow_promo_poster_en.jpg"
+   data-en="gabiflow_promo_en.mp4" data-el="gabiflow_promo.mp4"
+   data-poster-en="gabiflow_promo_poster_en.jpg" data-poster-el="gabiflow_promo_poster.jpg"
+   data-current="gabiflow_promo_en.mp4"
+   style="display:block;width:100%;height:auto;background:#0B1220">
+ <source src="gabiflow_promo_en.mp4" type="video/mp4">
  </video>
  </div>
  <div style="text-align:center;margin-top:22px">
@@ -585,6 +589,20 @@ const setLanguage = (lang) => {
     const b = document.getElementById(ids[1]);
     if (a && b) { a.classList.toggle('active', lang === 'en'); b.classList.toggle('active', lang === 'el'); }
   });
+  /* Swap the demo video to match the language */
+  const dv = document.getElementById('demoVideo');
+  if (dv) {
+    const want = dv.getAttribute('data-' + lang);
+    if (want && want !== dv.getAttribute('data-current')) {
+      dv.setAttribute('data-current', want);
+      const poster = dv.getAttribute('data-poster-' + lang);
+      if (poster) dv.setAttribute('poster', poster);
+      const src = dv.querySelector('source');
+      if (src) src.setAttribute('src', want);
+      try { dv.load(); } catch (_) {}
+      const p = dv.play(); if (p && p.catch) p.catch(() => {});
+    }
+  }
   document.documentElement.lang = lang;
 };
 buttons.forEach(btn => btn.addEventListener('click', () => setLanguage(btn.dataset.lang)));
