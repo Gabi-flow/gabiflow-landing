@@ -277,7 +277,8 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
  </video>
  </div>
  <div style="text-align:center;margin-top:22px">
- <a class="btn primary" href="https://app.gabiflow.eu">Open App</a>
+ <a class="btn primary lang active" href="https://app.gabiflow.eu">Open App</a>
+ <a class="btn primary lang" href="https://app.gabiflow.eu">Άνοιγμα App</a>
  </div>
  </div>
 </section>
@@ -584,7 +585,7 @@ const setLanguage = (lang) => {
     }
   });
   /* Explicit hero/aside/features-head pairs */
-  [['en-hero','el-hero'],['en-aside','el-aside'],['en-product-head','el-product-head'],['en-features-head','el-features-head'],['en-industries','el-industries'],['en-access-head','el-access-head'],['en-faq-head','el-faq-head']].forEach(ids => {
+  [['en-demo-head','el-demo-head'],['en-hero','el-hero'],['en-aside','el-aside'],['en-product-head','el-product-head'],['en-features-head','el-features-head'],['en-industries','el-industries'],['en-access-head','el-access-head'],['en-faq-head','el-faq-head']].forEach(ids => {
     const a = document.getElementById(ids[0]);
     const b = document.getElementById(ids[1]);
     if (a && b) { a.classList.toggle('active', lang === 'en'); b.classList.toggle('active', lang === 'el'); }
