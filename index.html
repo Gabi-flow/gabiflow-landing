@@ -73,9 +73,11 @@
   "downloadUrl": "https://app.gabiflow.eu/",
   "description": "GabiFlow is a smart scheduling, reservations and client management app for appointment &amp; reservation businesses — salons, barbers, nail studios, clinics, spas, restaurants, cafés, event venues and service teams.",
   "offers": {
-    "@type": "Offer",
-    "price": "0",
+    "@type": "AggregateOffer",
+    "lowPrice": "0",
+    "highPrice": "15",
     "priceCurrency": "EUR",
+    "offerCount": "3",
     "availability": "https://schema.org/InStock"
   }
 }
@@ -91,6 +93,24 @@
     "target": "https://www.google.com/search?q=GabiFlow",
     "query-input": "required name=search_term_string"
   }
+}
+</script>
+
+<!-- FAQ structured data — helps Google & AI answer questions directly -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Who is GabiFlow for?", "acceptedAnswer": { "@type": "Answer", "text": "GabiFlow is for appointment and reservation businesses such as hair salons, barbershops, nail studios, tattoo studios, beauty and aesthetics, clinics, spas, restaurants, cafés and event venues." } },
+    { "@type": "Question", "name": "What can I do with GabiFlow?", "acceptedAnswer": { "@type": "Answer", "text": "Manage appointments and a daily timeline, keep a client directory, define services and durations, send reminders to reduce no-shows, and for restaurants manage tables, reservations, waiters and events." } },
+    { "@type": "Question", "name": "Is GabiFlow a good appointment app for a hair salon, barbershop or nail studio?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. GabiFlow works as a digital appointment book for salons, barbershops and nail studios — bookings, a client directory, reminders and your whole day at a glance on mobile." } },
+    { "@type": "Question", "name": "Does GabiFlow work for restaurants, cafés and event venues?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. GabiFlow includes a table and reservation system with table layout, reservations, waiters per day, events and printable floor plans." } },
+    { "@type": "Question", "name": "How much does GabiFlow cost?", "acceptedAnswer": { "@type": "Answer", "text": "GabiFlow has a free tier, and paid plans start from 15 euros per month. You can set up your store in about 10 minutes." } },
+    { "@type": "Question", "name": "Does GabiFlow work on mobile and offline?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. GabiFlow is a mobile-first PWA that also works offline and syncs across devices. Smart Import can turn a photo of a handwritten appointment book into digital appointments using AI." } },
+    { "@type": "Question", "name": "Για ποιους είναι το GabiFlow;", "acceptedAnswer": { "@type": "Answer", "text": "Για επιχειρήσεις με ραντεβού και κρατήσεις — κομμωτήρια, barbershops, νυχάδικα, tattoo studios, κέντρα ομορφιάς, ιατρεία, spa, εστιατόρια, καφέ και αίθουσες εκδηλώσεων." } },
+    { "@type": "Question", "name": "Πόσο κοστίζει το GabiFlow;", "acceptedAnswer": { "@type": "Answer", "text": "Έχει δωρεάν έκδοση και τα πληρωμένα πλάνα ξεκινούν από 15 ευρώ τον μήνα. Στήνεις το κατάστημά σου σε περίπου 10 λεπτά." } }
+  ]
 }
 </script>
 

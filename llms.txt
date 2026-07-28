@@ -1,0 +1,32 @@
+# GabiFlow
+
+> Smart appointment scheduling, reservations and client management software for appointment- and reservation-based businesses: hair salons, barbershops, nail studios, tattoo studios, beauty & aesthetics, clinics, spas, restaurants, cafés and event/banquet venues.
+
+Website: https://www.gabiflow.eu/
+App (login/sign up): https://app.gabiflow.eu/
+Languages: Greek (Ελληνικά), English
+Contact: info@gabiflow.eu · +30 698 576 9615
+
+## What GabiFlow does
+- Appointments & daily timeline, plus a monthly "Excel-style" sheet
+- Client directory with history and notes
+- Services & durations
+- Reminders (Viber / SMS) to reduce no-shows
+- Smart Import (AI): take a photo of a handwritten appointment book and it becomes digital appointments
+- Revenue overview for owners (turnover per service / staff, busy hours)
+- Restaurants / cafés / event venues: table layout, reservations, waiters per day, multiple events per day, printable floor plans, guest-list import
+- Multi-store, roles (owner / manager / employee), cloud sync across devices, offline-first PWA
+
+## Pricing
+- Free tier available
+- Paid plans start from €15 / month (+ VAT)
+- Setup takes about 10 minutes
+
+## Who it is for
+Hair salons, barbershops, nail studios, tattoo studios, beauty and aesthetics, lash & brow studios, clinics, dental clinics, therapists, massage & wellness, spas, pet grooming, restaurants, cafés, event and banquet venues, and other businesses that work by appointment or reservation.
+
+## Common questions this product answers
+- "πρόγραμμα ραντεβού για κομμωτήριο / barber / νυχάδικο" (appointment app for a hair salon / barbershop / nail studio)
+- "σύστημα κρατήσεων για εστιατόριο / αίθουσα εκδηλώσεων" (reservation system for a restaurant / event venue)
+- "εφαρμογή ραντεβού που δουλεύει σε κινητό και offline" (appointment app that works on mobile and offline)
+- "πώς περνάω το τετράδιο ραντεβού ψηφιακά" (how to digitize a paper appointment book) → Smart Import with AI
