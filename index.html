@@ -191,6 +191,20 @@ header.hero{scroll-margin-top:0}
 .faq-item{background:rgba(15,23,42,.78);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:20px 22px;box-shadow:var(--shadow)}
 .faq-item h3{margin:0 0 8px;font-size:1rem;color:var(--gold)}
 .faq-item p{margin:0;color:#CBD5E1;line-height:1.75}
+.price-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(214px,1fr));gap:16px;align-items:stretch}
+.price-card{display:flex;flex-direction:column;position:relative}
+.price-card.feat{border-color:rgba(212,175,55,.55);box-shadow:0 16px 40px rgba(212,175,55,.12)}
+.price-badge{position:absolute;top:-11px;right:16px;font-size:.68rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--bg);background:linear-gradient(135deg,var(--gold),var(--gold-2));padding:4px 11px;border-radius:999px;box-shadow:0 6px 16px rgba(212,175,55,.3)}
+.price-name{font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--gold);margin:0 0 8px}
+.price-amt{display:flex;align-items:baseline;gap:6px;margin:2px 0}
+.price-amt .num{font-size:2.15rem;font-weight:900;line-height:1;color:var(--text)}
+.price-amt .per{font-size:.86rem;color:var(--muted);font-weight:600}
+.price-tag{color:#CBD5E1;font-size:.9rem;margin:6px 0 14px;min-height:2.4em}
+.price-feats{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px;flex:1}
+.price-feats li{padding-left:22px;position:relative;color:#CBD5E1;font-size:.9rem;line-height:1.4}
+.price-feats li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:900}
+.price-card .btn{width:100%}
+.price-note{color:var(--muted);font-size:.85rem;margin-top:18px;text-align:center}
 form{display:grid;gap:14px}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 input,textarea{width:100%;padding:14px 14px;border:1px solid rgba(255,255,255,.10);border-radius:12px;font:inherit;background:rgba(11,20,38,.92);color:var(--text)}
@@ -226,8 +240,9 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
  <a href="#demo">Demo</a>
  <a href="#product">Product</a>
  <a href="#features">Features</a> 
- <a href="#why">Why GabiFlow</a> 
- <a href="#faq">FAQ</a> 
+ <a href="#why">Why GabiFlow</a>
+ <a href="#pricing">Pricing</a>
+ <a href="#faq">FAQ</a>
  <a href="#access">Request Access</a> 
  <a href="#contact">Contact</a> 
  </div>
@@ -494,7 +509,84 @@ footer{padding:26px 0 42px;color:var(--muted);font-size:.95rem;border-top:1px so
   </div>
 </section>
 
-<section id="access"> 
+<section id="pricing">
+ <div class="wrap">
+  <div class="lang active" id="en-pricing">
+   <h2 class="section-title">Simple, transparent pricing</h2>
+   <p class="section-lead">Start free. Upgrade when you grow. No hidden fees — cancel anytime.</p>
+   <div class="price-grid">
+    <div class="card price-card">
+     <div class="price-name">Free</div>
+     <div class="price-amt"><span class="num">€0</span></div>
+     <div class="price-tag">Start free, forever.</div>
+     <ul class="price-feats"><li>Daily &amp; monthly schedule</li><li>Up to 2 employees</li><li>Cloud sync + offline</li><li>5 Smart Imports/day</li></ul>
+     <a class="btn secondary" href="https://app.gabiflow.eu">Start free</a>
+    </div>
+    <div class="card price-card feat">
+     <div class="price-badge">★ Popular</div>
+     <div class="price-name">Pro</div>
+     <div class="price-amt"><span class="num">€15</span><span class="per">/month</span></div>
+     <div class="price-tag">For busy professionals.</div>
+     <ul class="price-feats"><li>Everything in Free</li><li>Unlimited appointments</li><li>Up to 10 employees</li><li>20 Smart Imports/day</li><li>Priority support</li></ul>
+     <a class="btn primary" href="https://app.gabiflow.eu">Choose Pro</a>
+    </div>
+    <div class="card price-card">
+     <div class="price-name">Business</div>
+     <div class="price-amt"><span class="num">€29</span><span class="per">/month</span></div>
+     <div class="price-tag">For multi-store owners.</div>
+     <ul class="price-feats"><li>Everything in Pro</li><li>Up to 5 stores</li><li>Centralized dashboard</li><li>Multi-location analytics</li><li>Per-store branding</li></ul>
+     <a class="btn secondary" href="https://app.gabiflow.eu">Choose Business</a>
+    </div>
+    <div class="card price-card">
+     <div class="price-name">Enterprise</div>
+     <div class="price-amt"><span class="num">€6</span><span class="per">/store/month</span></div>
+     <div class="price-tag">For chains (6+ stores).</div>
+     <ul class="price-feats"><li>Everything in Business</li><li>Unlimited stores</li><li>Unlimited employees</li><li>Special chain pricing</li><li>Dedicated support</li></ul>
+     <a class="btn secondary" href="#contact">Contact us</a>
+    </div>
+   </div>
+   <p class="price-note">All prices exclude VAT. Set up your store in about 10 minutes.</p>
+  </div>
+  <div class="lang" id="el-pricing">
+   <h2 class="section-title">Απλές, διάφανες τιμές</h2>
+   <p class="section-lead">Ξεκίνα δωρεάν. Αναβάθμισε όταν μεγαλώσεις. Χωρίς κρυφές χρεώσεις — ακύρωση οποτεδήποτε.</p>
+   <div class="price-grid">
+    <div class="card price-card">
+     <div class="price-name">Free</div>
+     <div class="price-amt"><span class="num">€0</span></div>
+     <div class="price-tag">Ξεκίνα δωρεάν, για πάντα.</div>
+     <ul class="price-feats"><li>Ημερήσιο &amp; μηνιαίο πρόγραμμα</li><li>Έως 2 υπάλληλοι</li><li>Cloud sync + offline</li><li>5 Smart Imports/μέρα</li></ul>
+     <a class="btn secondary" href="https://app.gabiflow.eu">Ξεκίνα δωρεάν</a>
+    </div>
+    <div class="card price-card feat">
+     <div class="price-badge">★ Δημοφιλές</div>
+     <div class="price-name">Pro</div>
+     <div class="price-amt"><span class="num">€15</span><span class="per">/μήνα</span></div>
+     <div class="price-tag">Για επαγγελματίες με κίνηση.</div>
+     <ul class="price-feats"><li>Ό,τι στο Free</li><li>Απεριόριστα ραντεβού</li><li>Έως 10 υπάλληλοι</li><li>20 Smart Imports/μέρα</li><li>Priority support</li></ul>
+     <a class="btn primary" href="https://app.gabiflow.eu">Διάλεξε Pro</a>
+    </div>
+    <div class="card price-card">
+     <div class="price-name">Business</div>
+     <div class="price-amt"><span class="num">€29</span><span class="per">/μήνα</span></div>
+     <div class="price-tag">Για πολυκαταστήματα.</div>
+     <ul class="price-feats"><li>Ό,τι στο Pro</li><li>Έως 5 καταστήματα</li><li>Κεντρικό dashboard</li><li>Analytics πολλαπλών σημείων</li><li>Branding ανά κατάστημα</li></ul>
+     <a class="btn secondary" href="https://app.gabiflow.eu">Διάλεξε Business</a>
+    </div>
+    <div class="card price-card">
+     <div class="price-name">Enterprise</div>
+     <div class="price-amt"><span class="num">€6</span><span class="per">/κατάστημα/μήνα</span></div>
+     <div class="price-tag">Για αλυσίδες (6+ καταστήματα).</div>
+     <ul class="price-feats"><li>Ό,τι στο Business</li><li>Απεριόριστα καταστήματα</li><li>Απεριόριστοι υπάλληλοι</li><li>Ειδική τιμή αλυσίδων</li><li>Αποκλειστική υποστήριξη</li></ul>
+     <a class="btn secondary" href="#contact">Επικοινώνησε</a>
+    </div>
+   </div>
+   <p class="price-note">Οι τιμές δεν περιλαμβάνουν ΦΠΑ. Στήσιμο σε ~10 λεπτά.</p>
+  </div>
+ </div>
+</section>
+
+<section id="access">
  <div class="wrap"> 
  <div class="download-box"> 
  <div class="lang active" id="en-access-head"> 
